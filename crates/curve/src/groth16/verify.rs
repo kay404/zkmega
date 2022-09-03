@@ -36,10 +36,11 @@ pub fn verify<C: CurveBasicOperations>(parcel: Vec<u8>) -> Result<bool> {
 /// preprocess vk and proof to verify proof
 pub fn preprocessed_verify_proof<C: CurveBasicOperations>(
     vk: [&str; 14],
-    vk_gamma_abc: [&str; 6],
+    vk_gamma_abc: Vec<&str>,
     proof_and_input: &[u8],
 ) -> Result<bool> {
-    let bytes = hex::decode(proof_and_input).map_err(|e| format!("hex decode error:{}", e))?;
+    // let bytes = hex::decode(proof_and_input).map_err(|e| format!("hex decode error:{}", e))?;
+    let bytes = proof_and_input.to_vec();
     let (proof, input) = bytes.split_at(2 * C::G1_LEN + C::G2_LEN);
 
     let mut vk_vec = Vec::new();
